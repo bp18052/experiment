@@ -1,0 +1,20 @@
+' 環境へのdefine!（未完成版）
+@startuml
+title 環境へのdefine!
+
+participant "Environment" as Environment
+participant "Hashtable" as Hashtable
+
+->Environment: define(Symbol,SExpression): void
+
+note right :定義しているだけなのでハッシュテーブルから環境に値を返す\n必要がないと判断したので、Hashtable->Environmentの矢印はない
+
+activate Environment
+
+Environment -> Hashtable:put(Symbol,SExpression): method
+
+<-Hashtable:SExpression
+
+deactivate Environment
+    
+@enduml

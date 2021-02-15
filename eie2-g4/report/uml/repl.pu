@@ -1,0 +1,84 @@
+' REPLのシーケンス図(未完成版)
+@startuml
+title REPL
+actor ユーザ as user
+
+activate user
+activate Main
+create Environment
+Main -> Environment: new
+note right: 大域的な環境を生成
+
+create Reader
+Main -> Reader: new
+note right: 構文解析器を生成
+
+loop
+  Main -> Reader: sexp = read(): SExpression
+  activate Reader
+  user -> Reader : S式（テキスト）
+  Reader --> Main
+  deactivate Reader
+  Main -> Evaluator: eval(sexp, env): SExpression
+  note right: envは大域的な環境
+  activate Evaluator
+  alt 整数
+    Evaluator --> Main : Int
+    Main --> user : 評価結果の表示
+  else 浮動小数点数
+  Evaluator --> Main :Float
+  Main -->user :評価結果の表示
+  else 真理値
+    Evaluator --> Main : Bool
+    Main --> user : 評価結果の表示
+  else シンボル
+    Evaluator -> Environment: getValueOf(sexp): SExpression
+    note right: このsexpはSymbol
+    activate Environment
+    Environment --> Evaluator
+    deactivate Environment
+    Evaluator --> Main: SExpression
+    Main --> user: 評価結果の表示
+  else 空リスト
+    Evaluator --> Main : EmptyList
+    Main --> user : 評価結果の表示
+  else 空リスト以外のリスト
+    Evaluator -> Evaluator: eval(sexpのcar): SExpression
+    note right: このsexpはConsCell
+    activate Evaluator
+    deactivate Evaluator
+    alt 組み込み手続き
+      Evaluator --> Evaluator:evaluatedArgs = evalArgs(S式のcdr,env);
+      Evaluator --> Subroutine: referSubroutine(evaluatedArgs,env);
+      activate Subroutine
+      Subroutine --> Evaluator:SExpresiion
+      deactivate Subroutine
+      Evaluator --> Main: SExpression
+      Main --> user: 評価結果の表示
+    else 特殊形式
+      Evaluator --> Homes:referHomes(S式,env);
+      activate Homes
+      Homes --> Evaluator: SExpression
+      deactivate Homes
+      Evaluator --> Main: SExpression
+      Main --> user: 評価結果の表示
+    else クロージャ
+      Evaluator --> Evaluator: evaluatedArgs = evalArgs(S式のcdr,env);
+      Evaluator -->Closure: referClosure(evaluatedArgs,env);
+      activate Closure
+      Closure --> Evaluator: SExpression
+      deactivate Closure
+      Evaluator --> Main: SExpression
+      Main --> user: 評価結果の表示
+    end
+  else エラー
+    Evaluator --> Main : Exception
+    deactivate Evaluator
+    Main --> user : エラーの表示
+  end
+end ' end of loop
+
+
+deactivate Main
+deactivate user
+@enduml

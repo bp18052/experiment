@@ -1,0 +1,291 @@
+クラス図のPlantUML
+
+@startuml
+class Closure [[java:lisp.eval.Closure]] {
+	~{static}void closure()
+}
+interface SExpression [[java:lisp.eval.SExpression]] {
+}
+SExpression <|.. Closure
+class SpecialForm [[java:lisp.eval.SpecialForm]] {
+	~SExpression apply(SExpression args)
+}
+interface SExpression [[java:lisp.eval.SExpression]] {
+}
+SExpression <|.. SpecialForm
+class Graphics [[java:lisp.eval.Graphics]] {
+	-{static}void drawLine()
+	-{static}void clear()
+	-{static}void setColor()
+	-{static}void fillOval()
+}
+interface SExpression [[java:lisp.eval.SExpression]] {
+}
+SExpression <|.. Graphics
+class Int [[java:lisp.eval.Int]] {
+	-Integer value
+	+Integer getValue()
+	-Int(Integer value)
+	+{static}Int valueOf(int value)
+	+String toString()
+	+int hashCode()
+	+boolean equals(Object obj)
+}
+interface SExpression [[java:lisp.eval.SExpression]] {
+}
+SExpression <|.. Int
+class Undef [[java:lisp.eval.Undef]] {
+	-{static}Undef instance
+	-Undef()
+	+{static}Undef getInstance()
+	+String toString()
+}
+interface SExpression [[java:lisp.eval.SExpression]] {
+}
+SExpression <|.. Undef
+class Subroutine [[java:lisp.eval.Subroutine]] {
+	~SExpression apply(SExpression args)
+}
+interface SExpression [[java:lisp.eval.SExpression]] {
+}
+SExpression <|.. Subroutine
+class Bool [[java:lisp.eval.Bool]] {
+	-{static}Bool TRUE
+	-{static}Bool FALSE
+	-boolean value
+	+boolean isValid()
+	-Bool(boolean value)
+	+{static}Bool valueOf(boolean value)
+	+String toString()
+}
+interface SExpression [[java:lisp.eval.SExpression]] {
+}
+SExpression <|.. Bool
+class Symbol [[java:lisp.eval.Symbol]] {
+	-String name
+	+String getName()
+	-Symbol(String symbol)
+	+{static}Symbol getInstance(String name)
+	+String toString()
+	+int hashCode()
+	+boolean equals(Object obj)
+}
+interface SExpression [[java:lisp.eval.SExpression]] {
+}
+SExpression <|.. Symbol
+class EmptyList [[java:lisp.eval.EmptyList]] {
+	-{static}EmptyList emptyList
+	-EmptyList()
+	+{static}EmptyList getInstance()
+	+String toString()
+}
+interface SExpression [[java:lisp.eval.SExpression]] {
+}
+SExpression <|.. EmptyList
+interface SExpression [[java:lisp.eval.SExpression]] {
+}
+class Evaluator [[java:lisp.eval.Evaluator]] {
+	+{static}SExpression eval(SExpression sexp, Environment env)
+}
+class ConsCell [[java:lisp.eval.ConsCell]] {
+	+SExpression getCar()
+	+SExpression getCdr()
+	-ConsCell(SExpression car, SExpression cdr)
+	+{static}ConsCell getInstance(SExpression car, SExpression cdr)
+	+String toString()
+}
+class SExpression [[java:lisp.eval.SExpression]] {
+}
+ConsCell --> "1" SExpression : car
+class SExpression [[java:lisp.eval.SExpression]] {
+}
+ConsCell --> "1" SExpression : cdr
+interface SExpression [[java:lisp.eval.SExpression]] {
+}
+SExpression <|.. ConsCell
+class Environment [[java:lisp.eval.Environment]] {
+	+SExpression getValueOf(Symbol symbol)
+	+void define(Symbol symbol, SExpression sexp)
+	+void set(Symbol symbol, SExpression sexp)
+}
+class Add [[java:lisp.eval.Add]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Add
+class Append [[java:lisp.eval.Append]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Append
+class Big [[java:lisp.eval.Big]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Big
+class BigEqale [[java:lisp.eval.BigEqale]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- BigEqale
+class Car [[java:lisp.eval.Car]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Car
+class Cdr [[java:lisp.eval.Cdr]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Cdr
+class Cons [[java:lisp.eval.Cons]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Cons
+class Cos [[java:lisp.eval.Cos]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Cos
+class Define [[java:lisp.eval.Define]] {
+	~SExpression apply(SExpression args)
+}
+class SpecialForm [[java:lisp.eval.SpecialForm]] {
+}
+SpecialForm <|-- Define
+class Divide [[java:lisp.eval.Divide]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Divide
+class Eq [[java:lisp.eval.Eq]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Eq
+class Eqale [[java:lisp.eval.Eqale]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Eqale
+class Exit [[java:lisp.eval.Exit]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Exit
+class If [[java:lisp.eval.If]] {
+	~SExpression apply(SExpression args)
+}
+class SpecialForm [[java:lisp.eval.SpecialForm]] {
+}
+SpecialForm <|-- If
+class Lambda [[java:lisp.eval.Lambda]] {
+	~SExpression apply(SExpression args)
+}
+class SpecialForm [[java:lisp.eval.SpecialForm]] {
+}
+SpecialForm <|-- Lambda
+class Let [[java:lisp.eval.Let]] {
+	~SExpression apply(SExpression args)
+}
+class SpecialForm [[java:lisp.eval.SpecialForm]] {
+}
+SpecialForm <|-- Let
+class List [[java:lisp.eval.List]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- List
+class Map [[java:lisp.eval.Map]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Map
+class Modulo [[java:lisp.eval.Modulo]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Modulo
+class Multiple [[java:lisp.eval.Multiple]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Multiple
+class NewLine [[java:lisp.eval.NewLine]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- NewLine
+class Not [[java:lisp.eval.Not]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Not
+class Null [[java:lisp.eval.Null]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Null
+class Quote [[java:lisp.eval.Quote]] {
+	~SExpression apply(SExpression args)
+}
+class SpecialForm [[java:lisp.eval.SpecialForm]] {
+}
+SpecialForm <|-- Quote
+class Set [[java:lisp.eval.Set]] {
+	~SExpression apply(SExpression args)
+}
+class SpecialForm [[java:lisp.eval.SpecialForm]] {
+}
+SpecialForm <|-- Set
+class Sin [[java:lisp.eval.Sin]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Sin
+class Small [[java:lisp.eval.Small]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Small
+class SmallEqale [[java:lisp.eval.SmallEqale]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- SmallEqale
+class Subtract [[java:lisp.eval.Subtract]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Subtract
+class Write [[java:lisp.eval.Write]] {
+	~SExpression apply(SExpression args)
+}
+class Subroutine [[java:lisp.eval.Subroutine]] {
+}
+Subroutine <|-- Write
+@enduml

@@ -1,0 +1,22 @@
+' 環境へのset!
+@startuml
+title 環境へのset!
+participant "Environment" as Environment
+participant "外側のEnvironment" as 外側のEnvironment
+participant "Hashtable" as Hashtable
+[->Environment: set(symbol:Symbol, sexp:SExpression): void
+activate Environment
+alt Environmentに定義済みの変数がない
+Environment->外側のEnvironment: set(symbol:Symbol, sexp:SExpression): void
+alt 外側のEnvironmentに定義済みの変数がない
+[<-外側のEnvironment:Exception
+else 外側のenvironmentに定義済みの変数がある
+Environment<-外側のEnvironment:SExpression
+end
+else Environmentに定義済みの変数がある
+Environment->Hashtable:put(symbol,sexp)"再定義を行う";
+end
+deactivate Environment
+
+
+@enduml

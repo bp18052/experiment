@@ -1,0 +1,29 @@
+' 環境からの値の取得（未完成版）
+@startuml
+title 環境からの値取得
+
+
+participant "Environment" as Environment
+participant "外側のEnvironment" as 外側のEnvironment
+participant "Hashtable" as Hashtable
+
+->Environment: getValueOf(symbol: Symbol): SExpression
+
+-> Hashtable: searchFlameOf(symbol: Symbol):SExpresion
+
+alt シンボルが環境内にある
+
+activate Environment
+<-Environment: SExpresssion
+
+else シンボルが環境内にない
+->Environment:
+
+Environment->外側のEnvironment:getValueOf(symbol: Symbol): SExpression
+
+<-外側のEnvironment:Exception
+
+
+deactivate Environment
+    end
+@enduml

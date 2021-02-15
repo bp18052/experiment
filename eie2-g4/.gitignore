@@ -1,0 +1,7 @@
+*~
+*.bak
+classes/
+doc/
+# test/
+target/
+.DS_Store
